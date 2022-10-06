@@ -130,7 +130,7 @@
         new ModelCity().delete().where('ID', '=', 10001, 'OR', 'ID', '=', 10000).execute(true).then(res => console.log(res));
 
 6) Создание самописного запроса с помощью ownQuery
-    > Итоговый запрос к БД: SELECT `CountryCode`, sum(`Population`) as CountPopul FROM `city` GROUP BY `CountryCode` HAVING `CountPopul` > 40000000;
+    > Итоговый запрос к БД: SELECT &#8219;CountryCode&#8219;, sum(&#8219;Population&#8219;) as CountPopul FROM &#8219;city&#8219; GROUP BY &#8219;CountryCode&#8219; HAVING &#8219;CountPopul&#8219; > 40000000;
 
             class Model extends ModelExtension {
                 protected options = {
