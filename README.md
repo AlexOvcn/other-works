@@ -113,11 +113,11 @@
         new ModelCity().insertValues(['ID', 'Name', 'CountryCode', 'District', 'Population'], [[10000, 'Lopuhinka', 'RUS', 'Lopuhinka (village)', 2000000], [10001, 'Nikolaevka', 'RUS', 'Nikolaevka (village)', 1]]).execute().then(res => console.log(res));
 
 3) Обновление значений с помощью updateSet
-    * Обновление без условий, третий аргумент указывает какую операцию мы производим с текущим значением в бд, то есть Population = Population * 1.1
+    * Обновление без условий, третий аргумент указывает какую операцию мы производим с текущим значением в бд, то есть &#8219;Population&#8219; = &#8219;Population&#8219; * 1.1
 
             new ModelCity().updateSet(['Population'], [1.1], ['*']).execute().then(res => console.log(res));
 
-    * Обновление с применением where, конечно мы можем просто присвоить новое значение, тогда пишем null, это эквивалетно Name = Kuganavolok
+    * Обновление с применением where, конечно мы можем просто присвоить новое значение, тогда пишем null, это эквивалетно &#8219;Name&#8219; = 'Kuganavolok'
 
             new ModelCity().updateSet(['Name', 'Population'], ['Kuganavolok', 30000], [null, '+']).where('ID', '=', 1).execute().then(res => console.log(res));
 
