@@ -88,15 +88,15 @@
 
             new ModelCity().select('*').where('ID', '<', '20', 'AND', 'CountryCode', '=', 'AFG', 'OR', 'ID', '=', 15).execute().then(res => console.log(res));
 
-    * Выбор строки с использованием limit
+    * Выбор строки с использованием limit и показом восьми записей
 
-            new ModelCity().select('ID', 'Name').limit(8, 2).execute().then(res => console.log(res));
+            new ModelCity().select('ID', 'Name').limit(8).execute().then(res => console.log(res));
 
-    * Выбор строки с использованием limit и с одним условием where
+    * Выбор строки с использованием limit с пропуском 2ух записей в начале и с одним условием where
 
             new ModelCity().select('ID', 'Name').where('CountryCode', '=', 'RUS').limit(8, 2).execute().then(res => console.log(res));
 
-    * Выбор строки с использованием orderBy и limit
+    * Выбор строки с использованием orderBy и limit, показ деталей запроса в execute
 
             new ModelCity().select('*').orderBy(['Population'], 'ASC').limit(3).execute(true).then(res => console.log(res));
 
@@ -108,20 +108,20 @@
     
             new ModelCity().select(['country', 'Name']).join('INNER', ['country'], 'ID', '=', ['country', 'Capital'], 'OR' ,['city', 'ID'], '=', 'Capital', 'OR', ['city', 'ID'], '=', ['country', 'Capital']).where('Continent', '=', 'North America').limit(1).execute(true).then(res => console.log(res));
 
-2) Вставка значений с помощью insertValues
+2) Вставка значений с помощью insertValues, во втором аргументе каждый массив в массиве это отдельная изменяемая строка в бд
 
         new ModelCity().insertValues(['ID', 'Name', 'CountryCode', 'District', 'Population'], [[10000, 'Lopuhinka', 'RUS', 'Lopuhinka (village)', 2000000], [10001, 'Nikolaevka', 'RUS', 'Nikolaevka (village)', 1]]).execute().then(res => console.log(res));
 
 3) Обновление значений с помощью updateSet
-    * Обновление без условий
+    * Обновление без условий, третий аргумент указывает какую операцию мы производим с текущим значением в бд, то есть Population = Population * 1.1
 
             new ModelCity().updateSet(['Population'], [1.1], ['*']).execute().then(res => console.log(res));
 
-    * Обновление с применение where
+    * Обновление с применением where, конечно мы можем просто присвоить новое значение, тогда пишем null, это эквивалетно Name = Kuganavolok
 
             new ModelCity().updateSet(['Name', 'Population'], ['Kuganavolok', 30000], [null, '+']).where('ID', '=', 1).execute().then(res => console.log(res));
 
-4) Обновление значений с помощью replaceValues
+4) Обновление значений с помощью replaceValues, второй аргумент построен как в методе insertValues
 
         new ModelCity().replaceValues(['ID', 'Name', 'CountryCode'], [[1, 'Kuganavolok', 'RUS'], [2, 'Lyubavichi', 'RUS']]).execute(true).then(res => console.log(res));
 
@@ -146,7 +146,7 @@
 
 ***
 # Обработка ошибок:
-### Вышеприведенные примеры не имели конструкции для отлова ошибок, поэтому давайте рассмотрим следующие примеры.
+### Вышеприведенные примеры не имели конструкции для отлова ошибок, поэтому давайте рассмотрим следующие примеры. Это уже что касаемо промиса.
 
 1) Первый пример
 
