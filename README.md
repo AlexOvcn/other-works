@@ -36,7 +36,7 @@
         class ModelCity extends ModelExtension {
             protected options = {
                 // открытый пул соединений, обязателен, позволяет выполнить запрос
-                open_pool_connections: Pool
+                open_pool_connections: Pool,
                 // выбор таблицы в которой будут осуществляться действия
                 table: 'city'
             };
