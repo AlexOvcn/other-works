@@ -19,7 +19,7 @@
 1) Импортируем создание пула из MySQL и класс `ModelExtension` из modelExtension.
 
         import { createPool } from "mysql";
-        import ModelExtension from 'modelExtension';
+        import { ModelExtension } from 'modelExtension';
 
 2) Настраиваем создание пула.
 
