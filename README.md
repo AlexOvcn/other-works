@@ -156,7 +156,7 @@
 
                 //* ошибка MySQL
                 if (typeof error === 'object' && 'code' in error && 'errno' in error) {
-                    let err = <MysqlError>error;
+                    let err: MysqlError = error;
                     console.log(`Ошибка запроса: ${err.sql}, номер ошибки: ${err.errno}, сообщение ошибки: ${err.sqlMessage}`);
                     return;
                 }
