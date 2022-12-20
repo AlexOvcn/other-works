@@ -127,7 +127,7 @@ exports.ModelExtension = class ModelExtension {
     select(...fields) {
         let finallyFieldsArray = [];
         fields.map(el => Array.isArray(el) ? finallyFieldsArray = finallyFieldsArray.concat(el) : finallyFieldsArray.push(el));
-        this.#query += `SELECT ${finallyFieldsArray[0] === '*' ? '*' : this.#creatorOfQuestionMarksForTableWithColumn(fields)} FROM ${this.options.table} `;
+        this.#query += `SELECT ${finallyFieldsArray[0] === '*' ? '*' : this.#creatorOfQuestionMarksForTableWithColumn(fields)} FROM \`${this.options.table}\` `;
         if (fields[0] !== '*') this.#values = this.#values.concat(finallyFieldsArray);
         return this;
     }
