@@ -106,7 +106,7 @@
 
     * Обьединение таблиц с помощью join, уточнение для поля в select
     
-            new ModelCity().select(['country', 'Name']).join('INNER', ['country'], 'ID', '=', ['country', 'Capital'], 'OR' ,['city', 'ID'], '=', 'Capital', 'OR', ['city', 'ID'], '=', ['country', 'Capital']).where('Continent', '=', 'North America').limit(1).execute(true).then(res => console.log(res));
+            new ModelCity().select(['country', 'Name'], ['country', 'Population']).join('INNER', ['country'], 'ID', '=', ['country', 'Capital'], 'OR' ,['city', 'ID'], '=', 'Capital', 'OR', ['city', 'ID'], '=', ['country', 'Capital']).where('Continent', '=', 'North America').limit(1).execute(true).then(res => console.log(res));
 
 2) Вставка значений с помощью insertValues, во втором аргументе каждый массив в массиве это отдельная изменяемая строка в бд
 
