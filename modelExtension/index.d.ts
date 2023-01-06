@@ -77,10 +77,11 @@ export abstract class ModelExtension {
 
     /**
      * Метод для завершения построения запроса и отправки его в базу данных
+     * @type `ResType` Если известен тип ожидаемого ответа, можем его указать
      * @param showDetails Позволяет показать детали запроса сконструированного этим классом (опционально) (по умолчанию = false)
      * @returns Возвращается промис в котором первым аргументом попадает либо результат ответа на запрос либо ошибка
      */
-    execute(showDetails?: boolean): Promise<OkPacket|any[]>
+    execute<ResType = any>(showDetails?: boolean): Promise<OkPacket|ResType[]>
 
     /**
      * Метод для сортировки по значени(ю/ям) в указанн(ом/ых) пол(е/ях)
