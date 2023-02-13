@@ -9,6 +9,8 @@ type ComparisonSignsType = '='|'!='|'<>'|'<'|'>'|'<='|'>='|'LIKE';
 type SignsArithmeticOperationsType = '+'|'-'|'/'|'*';
 //* определение типа доступных методов соединений
 type JoinMethodsType = 'INNER'|'LEFT'|'RIGHT';
+//* тип значений полей в БД
+type ValueType = string|number|null;
 
 //* описываем расширение модели к базе данных для работы с запросами к ней
 export abstract class ModelExtension {
@@ -32,7 +34,7 @@ export abstract class ModelExtension {
     /**
      * Свойство представляет из себя массив значений, который будет пополняться в процессе работы методов класса
      */
-    private values: (string | number)[];
+    private values: (ValueType)[];
 
     /**
      * Основная функция для непосредственного взаимодействия с базой данных
@@ -40,7 +42,7 @@ export abstract class ModelExtension {
      * @param values Массив значений
      * @returns Возвращается промис в котором первым аргументом попадает либо результат ответа на запрос либо ошибка MysqlError
      */
-    private executeQuery(query: string, values: (string | number)[]): Promise<OkPacket|any[]>
+    private executeQuery(query: string, values: (ValueType)[]): Promise<OkPacket|any[]>
 
     /**
      * Метод для проверки некоторых ключевых строк перед вставкой в запрос
@@ -98,9 +100,9 @@ export abstract class ModelExtension {
      * @param value3 Сравниваемое значение (Опционально)
      * @returns Возвращает контекст текущего класса
      */
-    where(field: string, sign: ComparisonSignsType, value: string|number): this
-    where(field: string, sign: ComparisonSignsType, value: string|number, additionalCondition: 'AND'|'OR', field2: string, sign2: ComparisonSignsType, value2: string|number): this
-    where(field: string, sign: ComparisonSignsType, value: string|number, additionalCondition: 'AND'|'OR', field2: string, sign2: ComparisonSignsType, value2: string|number, additionalCondition2: 'AND'|'OR', field3: string, sign3: ComparisonSignsType, value3: string|number): this
+    where(field: string, sign: ComparisonSignsType, value: ValueType): this
+    where(field: string, sign: ComparisonSignsType, value: ValueType, additionalCondition: 'AND'|'OR', field2: string, sign2: ComparisonSignsType, value2: ValueType): this
+    where(field: string, sign: ComparisonSignsType, value: ValueType, additionalCondition: 'AND'|'OR', field2: string, sign2: ComparisonSignsType, value2: ValueType, additionalCondition2: 'AND'|'OR', field3: string, sign3: ComparisonSignsType, value3: ValueType): this
 
     /**
      * Метод для группировки значений в столбцах
@@ -162,7 +164,7 @@ export abstract class ModelExtension {
      * @param values Вставляемые значения (запись имеет следующий вид, в массив записываются массивы, один массив - это одна затрагиваемая строка в бд)
      * @returns Возвращает контекст текущего класса
      */
-    insertValues(fields: string[], values: (string|number)[][]): this
+    insertValues(fields: string[], values: (ValueType)[][]): this
 
     /**
      * Метод для 'частичного' обновления данных в таблице бд (если обновляемая строка не найдена - новая не создается)
@@ -172,15 +174,15 @@ export abstract class ModelExtension {
      * @param useCurrentValue Передается массив соразмерный количеству обновляемых значений, в массиве указать знаки арифметических операций, если нужно произвести операцию с текущим значением поля(+ - * /), к примеру currentField = currentField + 1, или передать null любому из значений, если подразумевается обычное присваение currentField = someValue
      * @returns Возвращает контекст текущего класса
      */
-    updateSet(fields: string[], values: (string|number)[], useCurrentValue: (SignsArithmeticOperationsType|null)[]): this
+    updateSet(fields: string[], values: (ValueType)[], useCurrentValue: (SignsArithmeticOperationsType|null)[]): this
 
     /**
-     * Метод для полного обновления данных в таблице бд или создания новой строки, если какое-то поле не указали при выборе изменяемых полей, то значение в этих полях станет значением по умолчанию, либо появится ошибка при ограниченях (replaceValues работает точно так же как insertValues, за исключением того, что если старая строка в таблице имеет то же значение, что и новая строка для PRIMARY KEY или UNIQUE индекса, старая строка удаляется перед вставкой новой строки)
+     * Метод для полного обновления данных в таблице бд, если какое-то поле не указали при выборе изменяемых полей, то значение в этих полях сбросится к значению по умолчанию либо появится ошибка при ограниченях в бд для определенных полей (если обновляемая строка не найдена - создается новая)
      * @param fields Поля которые учавствуют в обновлении или вставке
      * @param values Обновляемые или вставляемые значения (запись имеет следующий вид, в массив записываются массивы, один массив - это одна затрагиваемая строка в бд)
      * @returns Возвращает контекст текущего класса
      */
-    replaceValues(fields: string[], values: (string|number)[][]): this
+    replaceValues(fields: string[], values: (ValueType)[][]): this
 
     /**
      * Метод для удаления данных
@@ -195,5 +197,5 @@ export abstract class ModelExtension {
      * @param values Значения, которые по очереди будут вставляться в строку запроса
      * @returns Возвращает контекст текущего класса
      */
-    ownQuery(query: string, values: (string|number)[]): this
+    ownQuery(query: string, values: (ValueType)[]): this
 }
